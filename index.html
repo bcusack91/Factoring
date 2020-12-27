@@ -115,302 +115,297 @@
                 <button onClick="window.location.reload();">Reload the Page and Try Again</button>
             </div>
         </div>
+<script>
+    //Define Function To Find GCF
+    function gcd_two_numbers(x, y) {
+        if ((typeof x !== 'number') || (typeof y !== 'number')) {
+            return false; }
+        x = Math.abs(x);
+        y = Math.abs(y);
+        while(y) {
+            var t = y;
+            y = x % y;
+            x = t;
+        }
+        return x;
+        }
+    //Function that enables color changes for visual aid in solving
+    function change_Terms_To_Red() {
+        document.getElementById("a_term").style.color="red";
+        document.getElementById("c_term").style.color="blue";
+        document.getElementById("hint_1").style.display = "inline-block";
+    }
 
-        
+    //Funcion that activates the terms throughout the remainder of the program
+    function Activate_Terms() {
+        var a = parseFloat(document.getElementById('a_term').value);
+        var i;
+        for (i=0; i < document.querySelectorAll('.a_term').length; i++) {
+            document.getElementsByClassName('a_term')[i].innerHTML = a;
+        }
 
-        <script>
+        var b = parseFloat(document.getElementById('b_term').value);
 
-            
-            //Define Function To Find GCF
-            function gcd_two_numbers(x, y) {
-                if ((typeof x !== 'number') || (typeof y !== 'number')) {
-                    return false; }
-                x = Math.abs(x);
-                y = Math.abs(y);
-                while(y) {
-                    var t = y;
-                    y = x % y;
-                    x = t;
-                }
-                return x;
-                }
-            //Function that enables color changes for visual aid in solving
-            function change_Terms_To_Red() {
-                document.getElementById("a_term").style.color="red";
-                document.getElementById("c_term").style.color="blue";
-                document.getElementById("hint_1").style.display = "inline-block";
+        for (j=0; j < document.querySelectorAll('.b_term').length; j++) {
+            document.getElementsByClassName("b_term")[j].innerHTML = b;
+        }
+
+        var c = parseFloat(document.getElementById('c_term').value);
+        var k;
+        for (k=0; k < document.querySelectorAll('.c_term').length; k++) {
+            document.getElementsByClassName("c_term")[k].innerHTML = c;
+        }
+    }
+
+    //Writing a function that defines the a_c_product that will be used in future steps
+    function Find_a_c_product() {
+        var a = parseFloat(document.getElementById('a_term').value);
+        var b = parseFloat(document.getElementById('b_term').value);
+        var c = parseFloat(document.getElementById('c_term').value);
+        var a_c_prod = a*c;
+
+        var i;                
+
+    //Coding Logic that enables appropriate signs to appear within the website
+        if (a_c_prod > 0) {
+            for (i=0; i < document.querySelectorAll('.a_c_product_sign').length; i++) {
+                document.getElementsByClassName('a_c_product_sign')[i].innerHTML = "+";
             }
+        }
+        else {          
+            for (i=0; i < document.querySelectorAll('.a_c_product_sign').length; i++) {
+                document.getElementsByClassName('a_c_product_sign')[i].innerHTML = "";}
+        }
+        for (i=0; i < document.querySelectorAll('.a_c_product').length; i++) {
+            document.getElementsByClassName("a_c_product")[i].innerHTML = a_c_prod;
+        }
 
-            //Funcion that activates the terms throughout the remainder of the program
-            function Activate_Terms() {
-                var a = parseFloat(document.getElementById('a_term').value);
-                var i;
-                for (i=0; i < document.querySelectorAll('.a_term').length; i++) {
-                    document.getElementsByClassName('a_term')[i].innerHTML = a;
-                }
-
-                var b = parseFloat(document.getElementById('b_term').value);
-
-                for (j=0; j < document.querySelectorAll('.b_term').length; j++) {
-                    document.getElementsByClassName("b_term")[j].innerHTML = b;
-                }
-
-                var c = parseFloat(document.getElementById('c_term').value);
-                var k;
-                for (k=0; k < document.querySelectorAll('.c_term').length; k++) {
-                    document.getElementsByClassName("c_term")[k].innerHTML = c;
-                }
+        if (c<0) {
+            for (i=0; i<document.querySelectorAll('.c_term_sign').length; i++) {
+                document.getElementsByClassName("c_term_sign")[i].innerHTML = "";
             }
+        }
 
-            //Writing a function that defines the a_c_product that will be used in future steps
-            function Find_a_c_product() {
-                var a = parseFloat(document.getElementById('a_term').value);
-                var b = parseFloat(document.getElementById('b_term').value);
-                var c = parseFloat(document.getElementById('c_term').value);
-                var a_c_prod = a*c;
-                
-                var i;                
-            
-            //Coding Logic that enables appropriate signs to appear within the website
-                if (a_c_prod > 0) {
-                    for (i=0; i < document.querySelectorAll('.a_c_product_sign').length; i++) {
-                        document.getElementsByClassName('a_c_product_sign')[i].innerHTML = "+";
-                    }
-                }
-                else {          
-                    for (i=0; i < document.querySelectorAll('.a_c_product_sign').length; i++) {
-                        document.getElementsByClassName('a_c_product_sign')[i].innerHTML = "";}
-                }
-                for (i=0; i < document.querySelectorAll('.a_c_product').length; i++) {
-                    document.getElementsByClassName("a_c_product")[i].innerHTML = a_c_prod;
-                }
-                
-                if (c<0) {
-                    for (i=0; i<document.querySelectorAll('.c_term_sign').length; i++) {
-                        document.getElementsByClassName("c_term_sign")[i].innerHTML = "";
-                    }
-                }
-
-                if (b<0) {
-                    for (i=0; i<document.querySelectorAll('.b_term_sign').length; i++) {
-                        document.getElementsByClassName("b_term_sign")[i].innerHTML = "";
-                    }
-                }
-
-                else if (b>0) {
-                    for (i=0; i<document.querySelectorAll('.b_term_sign').length; i++) {
-                        document.getElementsByClassName("b_term_sign")[i].innerHTML = "+";
-                    }
-                }
-                
-                //Logic To find Greatest Common Factor
-
-                var max_Factor=Math.sqrt(a_c_prod);    
-                output="";
-                output_2="";
-                var neg_max_Factor=-1*max_Factor;
-
-                //Separating b_term into 2 separate parts
-                if (a_c_prod > 0 && b > 0) {
-                for (x=1; x<=max_Factor; x++)
-                    {
-                        var factor_pair_array = [];
-                        var l=a_c_prod/x;
-                        var d=Math.floor(l);
-                        var sum = l + x;
-                        // compare integer answer and division answer
-                        if(l==d){
-                            output = output + "factor pair = " +  l +  "," +  x  + "<br>";
-                        }
-
-                        //Determine values and split them
-                        if(sum==b) {
-                            output_2 = "So the factor pair you want to select consists of " + x + " and " + l + ".";
-                            output_3 = "(" + x + " and " + l +")";
-                            split_term_1 = x;
-                            split_term_2 = l;
-                        }
-                    }
-                }
-
-                else if (a_c_prod > 0 && b < 0) {
-                for (x=-1; x>=neg_max_Factor; x--)
-                    {
-                        var factor_pair_array = [];
-                        var l=a_c_prod/x;
-                        var d=Math.ceil(l);
-                        var sum = l + x;
-                        // compare integer answer and division answer
-                        if(l==d){
-                            output = output + "factor pair = " +  l +  "," +  x  + "<br>";
-                        }
-
-                        //Determine values and split them
-                        if(sum==b) {
-                            output_2 = "So the factor pair you want to select consists of " + x + " and " + l + ".";
-                            output_3 = "(" + x + " and " + l +")";
-                            split_term_1 = x;
-                            split_term_2 = l;
-                        }
-                    }
-                }
-
-                else {
-                    var max_Factor=Math.sqrt(Math.abs(a_c_prod));
-                    for (x=1; x<=max_Factor; x++)
-                    {
-                        var factor_pair_array = [];
-                        var l=a_c_prod/x;
-                        var p = -l;
-                        var q = -x;
-                        var d=Math.ceil(l);
-                        var sum = l + x;
-                        var sum_2 = p+q;
-                        // compare integer answer and division answer
-                        if(l==d){
-                            output = output + "factor pair = " +  l +  "," +  x  + "<br>";
-                            output = output + "factor pair = " +  p +  "," +  -x  + "<br>";
-                        }
-
-                        //Determine values and split them
-                        if(sum==b) {
-                            output_2 = "So the factor pair you want to select consists of " + x + " and " + l + ".";
-                            output_3 = "(" + x + " and " + l +")";
-                            split_term_1 = x;
-                            split_term_2 = l;
-                        }
-
-                        if(sum_2==b) {
-                            output_2 = "So the factor pair you want to select consists of " + q + " and " + p + ".";
-                            output_3 = "(" + q + " and " + p +")";
-                            split_term_1 = q;
-                            split_term_2 = p;
-                        }
-                    }
-                }
-
-                //Denoting Proper Signage for Split Terms
-
-                if (split_term_1 > 0) {
-                    for (i=0; i < document.querySelectorAll('.split_term_1_sign').length; i++) {
-                        document.getElementsByClassName('split_term_1_sign')[i].innerHTML = "+";
-                    }
-                }
-                else {
-                    for (i=0; i < document.querySelectorAll('.split_term_1_sign').length; i++) {
-                        document.getElementsByClassName('split_term_1_sign')[i].innerHTML = "";
-                    }
-                }
-
-                if (split_term_2 > 0) {
-                    for (i=0; i < document.querySelectorAll('.split_term_2_sign').length; i++) {
-                        document.getElementsByClassName('split_term_2_sign')[i].innerHTML = "+";
-                    }
-                }
-                else {
-                    for (i=0; i < document.querySelectorAll('.split_term_2_sign').length; i++) {
-                        document.getElementsByClassName('split_term_2_sign')[i].innerHTML = "";
-                    }
-                }
-
-                document.getElementById('factorList').innerHTML = output;
-                document.getElementById('Correct_Pairs').innerHTML = output_2;
-                document.getElementById('Correct_Pairs_2').innerHTML = output_3;
-                for (i=0; i < document.querySelectorAll('.split_1').length; i++) {
-                    document.getElementsByClassName("split_1")[i].innerHTML = split_term_1;
-                }
-                for (i=0; i < document.querySelectorAll('.split_2').length; i++) {
-                        document.getElementsByClassName("split_2")[i].innerHTML = split_term_2;
-                }
-
-                var c_int = parseInt(c);
-                var split_term_2_int = parseInt(split_term_2);
-
-                var GCF_1 = gcd_two_numbers(a, split_term_1);
-                var GCF_2 = gcd_two_numbers(c_int, split_term_2_int);
-
-                if (GCF_1 != 1) {
-                    output_4 = GCF_1 + "x"; 
-                }
-                else {
-                    output_4 = "x"
-                }
-                document.getElementById('GCF_1_out').innerHTML = output_4;
-
-                output_5 = a/GCF_1;
-                output_6 = split_term_1/GCF_1;
-                if (split_term_1>0) {
-                    output_parenthesis = "(" + output_5 + "x + " + output_6 + ")";
-                }
-                    
-                else if (split_term_1 < 0) {
-                    output_parenthesis = "(" + output_5 + "x " + output_6 + ")";
-                }
-
-                document.getElementById("parenthesis_1").innerHTML = output_parenthesis;
-
-                output_7 = split_term_2/GCF_2;
-                output_8 = c/GCF_2;
-
-                if (GCF_1 != 1 && split_term_2 >0) {
-                output_9 = "(" + GCF_1 + "x+" + GCF_2 + ")";
-                }
-                else if (GCF_1 = 1 && split_term_2>0){
-                    output_9 = "(x+" + GCF_2 + ")";
-                }
-                else if (GCF_1 !=1 && split_term_2<0) {
-                    document.getElementById('second_parenthesis_GCF').innerHTML = "-";
-                    output_9 = "(" + output_4 + "-" + GCF_2 + ")";
-                }
-                else if (GCF_1 =1 && split_term_2<0) {
-                    document.getElementById('second_parenthesis_GCF').innerHTML = "-";
-                    output_9 = "(" + GCF_1 + "x+" + GCF_2 + ")";
-                }
-                document.getElementById('GCF_2_out').innerHTML = GCF_2;
-                document.getElementById("parenthesis_2").innerHTML = output_parenthesis;
-                document.getElementById('Final_Factor_1').innerHTML = output_9;
-                document.getElementById('Final_Factor_2').innerHTML = output_parenthesis;
+        if (b<0) {
+            for (i=0; i<document.querySelectorAll('.b_term_sign').length; i++) {
+                document.getElementsByClassName("b_term_sign")[i].innerHTML = "";
             }
+        }
 
-            //Logic that opens up hints as we move along
-            function Unlock_Hint_2() {
-                document.getElementById("hint_2").style.display="inline-block";
+        else if (b>0) {
+            for (i=0; i<document.querySelectorAll('.b_term_sign').length; i++) {
+                document.getElementsByClassName("b_term_sign")[i].innerHTML = "+";
             }
+        }
 
-            function Unlock_Hint_3() {
-                document.getElementById("hint_3").style.display="inline-block";
-            }
+        //Logic To find Greatest Common Factor
 
-            function Unlock_Hint_4() {
-                document.getElementById("hint_4").style.display="inline-block";
-            }
+        var max_Factor=Math.sqrt(a_c_prod);    
+        output="";
+        output_2="";
+        var neg_max_Factor=-1*max_Factor;
 
-            function Unlock_Hint_5() {
-                document.getElementById("hint_5").style.display="inline-block";
-            }
-
-            function Unlock_Hint_6() {
-                document.getElementById("hint_6").style.display="inline-block";
-            }
-
-            function Unlock_Hint_7() {
-                document.getElementById("hint_7").style.display="inline-block";
-            }
-
-            function Show_Negative() {
-                document.getElementById("neg_sign").style.display="inline";
-            }
-            function myFunction() {
-                var popup = document.getElementById("myPopup");
-                popup.classList.toggle("show");
-
-            if (popup.paused){ 
-                popup.play(); 
+        //Separating b_term into 2 separate parts
+        if (a_c_prod > 0 && b > 0) {
+        for (x=1; x<=max_Factor; x++)
+            {
+                var factor_pair_array = [];
+                var l=a_c_prod/x;
+                var d=Math.floor(l);
+                var sum = l + x;
+                // compare integer answer and division answer
+                if(l==d){
+                    output = output + "factor pair = " +  l +  "," +  x  + "<br>";
                 }
-            else{ 
-                popup.pause();
+
+                //Determine values and split them
+                if(sum==b) {
+                    output_2 = "So the factor pair you want to select consists of " + x + " and " + l + ".";
+                    output_3 = "(" + x + " and " + l +")";
+                    split_term_1 = x;
+                    split_term_2 = l;
                 }
             }
-        </script>
+        }
+
+        else if (a_c_prod > 0 && b < 0) {
+        for (x=-1; x>=neg_max_Factor; x--)
+            {
+                var factor_pair_array = [];
+                var l=a_c_prod/x;
+                var d=Math.ceil(l);
+                var sum = l + x;
+                // compare integer answer and division answer
+                if(l==d){
+                    output = output + "factor pair = " +  l +  "," +  x  + "<br>";
+                }
+
+                //Determine values and split them
+                if(sum==b) {
+                    output_2 = "So the factor pair you want to select consists of " + x + " and " + l + ".";
+                    output_3 = "(" + x + " and " + l +")";
+                    split_term_1 = x;
+                    split_term_2 = l;
+                }
+            }
+        }
+
+        else {
+            var max_Factor=Math.sqrt(Math.abs(a_c_prod));
+            for (x=1; x<=max_Factor; x++)
+            {
+                var factor_pair_array = [];
+                var l=a_c_prod/x;
+                var p = -l;
+                var q = -x;
+                var d=Math.ceil(l);
+                var sum = l + x;
+                var sum_2 = p+q;
+                // compare integer answer and division answer
+                if(l==d){
+                    output = output + "factor pair = " +  l +  "," +  x  + "<br>";
+                    output = output + "factor pair = " +  p +  "," +  -x  + "<br>";
+                }
+
+                //Determine values and split them
+                if(sum==b) {
+                    output_2 = "So the factor pair you want to select consists of " + x + " and " + l + ".";
+                    output_3 = "(" + x + " and " + l +")";
+                    split_term_1 = x;
+                    split_term_2 = l;
+                }
+
+                if(sum_2==b) {
+                    output_2 = "So the factor pair you want to select consists of " + q + " and " + p + ".";
+                    output_3 = "(" + q + " and " + p +")";
+                    split_term_1 = q;
+                    split_term_2 = p;
+                }
+            }
+        }
+
+        //Denoting Proper Signage for Split Terms
+
+        if (split_term_1 > 0) {
+            for (i=0; i < document.querySelectorAll('.split_term_1_sign').length; i++) {
+                document.getElementsByClassName('split_term_1_sign')[i].innerHTML = "+";
+            }
+        }
+        else {
+            for (i=0; i < document.querySelectorAll('.split_term_1_sign').length; i++) {
+                document.getElementsByClassName('split_term_1_sign')[i].innerHTML = "";
+            }
+        }
+
+        if (split_term_2 > 0) {
+            for (i=0; i < document.querySelectorAll('.split_term_2_sign').length; i++) {
+                document.getElementsByClassName('split_term_2_sign')[i].innerHTML = "+";
+            }
+        }
+        else {
+            for (i=0; i < document.querySelectorAll('.split_term_2_sign').length; i++) {
+                document.getElementsByClassName('split_term_2_sign')[i].innerHTML = "";
+            }
+        }
+
+        document.getElementById('factorList').innerHTML = output;
+        document.getElementById('Correct_Pairs').innerHTML = output_2;
+        document.getElementById('Correct_Pairs_2').innerHTML = output_3;
+        for (i=0; i < document.querySelectorAll('.split_1').length; i++) {
+            document.getElementsByClassName("split_1")[i].innerHTML = split_term_1;
+        }
+        for (i=0; i < document.querySelectorAll('.split_2').length; i++) {
+                document.getElementsByClassName("split_2")[i].innerHTML = split_term_2;
+        }
+
+        var c_int = parseInt(c);
+        var split_term_2_int = parseInt(split_term_2);
+
+        var GCF_1 = gcd_two_numbers(a, split_term_1);
+        var GCF_2 = gcd_two_numbers(c_int, split_term_2_int);
+
+        if (GCF_1 != 1) {
+            output_4 = GCF_1 + "x"; 
+        }
+        else {
+            output_4 = "x"
+        }
+        document.getElementById('GCF_1_out').innerHTML = output_4;
+
+        output_5 = a/GCF_1;
+        output_6 = split_term_1/GCF_1;
+        if (split_term_1>0) {
+            output_parenthesis = "(" + output_5 + "x + " + output_6 + ")";
+        }
+
+        else if (split_term_1 < 0) {
+            output_parenthesis = "(" + output_5 + "x " + output_6 + ")";
+        }
+
+        document.getElementById("parenthesis_1").innerHTML = output_parenthesis;
+
+        output_7 = split_term_2/GCF_2;
+        output_8 = c/GCF_2;
+
+        if (GCF_1 != 1 && split_term_2 >0) {
+        output_9 = "(" + GCF_1 + "x+" + GCF_2 + ")";
+        }
+        else if (GCF_1 = 1 && split_term_2>0){
+            output_9 = "(x+" + GCF_2 + ")";
+        }
+        else if (GCF_1 !=1 && split_term_2<0) {
+            document.getElementById('second_parenthesis_GCF').innerHTML = "-";
+            output_9 = "(" + output_4 + "-" + GCF_2 + ")";
+        }
+        else if (GCF_1 =1 && split_term_2<0) {
+            document.getElementById('second_parenthesis_GCF').innerHTML = "-";
+            output_9 = "(" + GCF_1 + "x+" + GCF_2 + ")";
+        }
+        document.getElementById('GCF_2_out').innerHTML = GCF_2;
+        document.getElementById("parenthesis_2").innerHTML = output_parenthesis;
+        document.getElementById('Final_Factor_1').innerHTML = output_9;
+        document.getElementById('Final_Factor_2').innerHTML = output_parenthesis;
+    }
+
+    //Logic that opens up hints as we move along
+    function Unlock_Hint_2() {
+        document.getElementById("hint_2").style.display="inline-block";
+    }
+
+    function Unlock_Hint_3() {
+        document.getElementById("hint_3").style.display="inline-block";
+    }
+
+    function Unlock_Hint_4() {
+        document.getElementById("hint_4").style.display="inline-block";
+    }
+
+    function Unlock_Hint_5() {
+        document.getElementById("hint_5").style.display="inline-block";
+    }
+
+    function Unlock_Hint_6() {
+        document.getElementById("hint_6").style.display="inline-block";
+    }
+
+    function Unlock_Hint_7() {
+        document.getElementById("hint_7").style.display="inline-block";
+    }
+
+    function Show_Negative() {
+        document.getElementById("neg_sign").style.display="inline";
+    }
+    function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+
+    if (popup.paused){ 
+        popup.play(); 
+        }
+    else{ 
+        popup.pause();
+        }
+    }
+    </script>
         </body>
 </html>
